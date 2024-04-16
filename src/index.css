@@ -1,0 +1,9 @@
+body{
+    background-color: #0f0f0fd5;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.815) 0%, rgba(15,15,15,1) 100%);
+    min-height: 100vh;
+}

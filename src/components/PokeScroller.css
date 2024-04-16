@@ -1,0 +1,73 @@
+.PokeScroller {
+  display: flex;
+  justify-content: space-between; /* or space-around */
+  align-items: center;
+}
+
+.poke-card {
+  width: 30%; /* or a different percentage */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 0;
+}
+
+.poke-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: none;
+}
+
+.poke-card-content h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.623);
+}
+
+
+.poke-card-media {
+  transition: all 0.3s ease;
+}
+
+.poke-card-media:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.position-0 {
+  left: 0;
+  opacity: 0.5;
+  scale: 0.8;
+}
+.position-1 {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  scale: 1.1;
+}
+
+.position-2 {
+  right: 0;
+  opacity: 0.5;
+  scale: 0.8;
+}
+
+/* at small screen sizes, dont display left and right cars 0 and 2 */
+
+@media (max-width: 768px) {
+  .position-0 {
+    display: none;
+  }
+  .position-2 {
+    display: none;
+  }
+
+  .position-1 {
+   width: 100%;
+  }
+}
