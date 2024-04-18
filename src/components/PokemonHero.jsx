@@ -3,6 +3,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography, Chip, IconBu
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import VolumeUp from '@mui/icons-material/VolumeUp';
 import { getPokemonById, getImageUrl } from '../API/pokemon';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
@@ -106,9 +107,9 @@ const handleFavoriteClick = () => {
                     ))}
                 </div>
                 <div className='favorite-button'>
-                <IconButton onClick={handleFavoriteClick}>
-                    <FavoriteIcon color={favorite ? 'secondary' : 'default'} />
-                </IconButton>
+                    <IconButton onClick={handleFavoriteClick}>
+                        <FavoriteIcon color={favorite ? 'secondary' : 'default'} />
+                    </IconButton>
                 </div>
                 <div className="pokemon-details">
                     <List>
@@ -121,15 +122,17 @@ const handleFavoriteClick = () => {
                         <ListItem>
                             <ListItemText primary={`Base Experience: ${pokemon.base_experience}`} />
                         </ListItem>
-                        
-                            <ListItemText primary={`${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}'s Cry:`}/>
+                        <ListItem>
+                            <ListItemText primary={`${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}'s Cry:`} />
                             <audio src={pokemon.cries.latest}></audio>
                             <IconButton onClick={() => document.querySelector('audio').play()}>
-                                 <PlayArrow />
-                            </IconButton>    
-                               <Slider onChange={(e, value) => document.querySelector('audio').volume = value} defaultValue={0.5} step={0.01} max={1} min={0} />
+                                <PlayArrow />
+                            </IconButton>
                             
-                       
+                                <VolumeUp/>
+                            
+                            <Slider onChange={(e, value) => document.querySelector('audio').volume = value} defaultValue={0.5} step={0.01} max={1} min={0} />
+                        </ListItem>
                     </List>
                 </div>
                 <Accordion>
@@ -141,11 +144,9 @@ const handleFavoriteClick = () => {
                         <Typography>Moves</Typography>
                     </AccordionSummary>
                     <AccordionDetails sx={{overflowY: 'scroll', height: '200px'}}>
-                        <Typography>
-                            {pokemon.moves.map((move, index) => (
-                                <Chip key={index} label={move.move.name.charAt(0).toUpperCase() + move.move.name.slice(1)} />
-                            ))}
-                        </Typography>
+                        {pokemon.moves.map((move, index) => (
+                            <Chip variant='outlined' sx={{margin: '2px'}} key={index} label={move.move.name.charAt(0).toUpperCase() + move.move.name.slice(1)} />
+                        ))}
                     </AccordionDetails>
                 </Accordion>
             </div>

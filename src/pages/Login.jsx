@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, TextField, Button, Link } from '@mui/material';
 import { signIn } from '../API/fireAuth';
@@ -8,7 +8,7 @@ import { UserContext } from '../context/UserContext';
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: false, password: false });
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -16,26 +16,44 @@ const Login = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    setErrors({ email: false, password: false });
-    if (!formData.email || !formData.password) {
-      setErrors({ email: !formData.email, password: !formData.password });
-      return;
-    }
-    try {
-      const userCredential = await signIn(formData.email, formData.password);
-      setUser(userCredential);
-      if (userCredential != null) navigate('/');
-    } catch (error) {
-      const newErrors = { ...errors };
-      if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
-        newErrors.email = true;
-      } else if (error.code === 'auth/wrong-password') {
-        newErrors.password = true;
-      }
-      setErrors(newErrors);
-    }
-  };
+  event.preventDefault();
+  setErrors({ email: false, password: false });
+  if (!formData.email || !formData.password) {
+    setErrors({ email: !formData.email, password: !formData.password });
+    return;
+  }
+  try {
+    signIn(formData.email, formData.password)
+      .then((userCredential) => {
+        console.log('Promise resolving,m navigate 28', userCredential)
+        setUser(userCredential);
+       
+      })
+      .catch((error) => {
+        const newErrors = { ...errors };
+        if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
+          newErrors.email = true;
+        } else if (error.code === 'auth/wrong-password') {
+          newErrors.password = true;
+        }
+        setErrors(newErrors);
+      });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+useEffect(()=>{
+  if(user){
+    navigate('/')
+  }
+  
+}, [user])
+if(user){
+  return(
+    <p> user</p>
+  )
+}
 
   return (
     <Container className='glass text-light login' component="main" maxWidth="xs">

@@ -27,15 +27,16 @@ export const signUp = async (email, password, username) => {
 }
 
 export const signIn = async (email, password) => {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log(` getting Email: ${email}, Password: ${password}`);
+    await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
         window.localStorage.setItem('notAToken', JSON.stringify(user.accessToken));
         window.localStorage.setItem('user', JSON.stringify(user));
+        console.log('fireauth 35: ', user)
         return user;
-    } catch (error) {
-        console.log(error);
-    }
+    }).catch((error) => {
+        console.error(error);
+    });
 }
 
 export const signOut = async () => {

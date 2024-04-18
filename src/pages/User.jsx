@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getUser } from '../API/firedb';
 import { useParams } from 'react-router-dom';
+import PokeCard from '../components/PokeCard';
 
 async function getUserData(id) {
   try {
@@ -27,9 +28,15 @@ const User = () => {
       <h1>User Profile</h1>
       {user && <div>
         <h1>{id}</h1>
-        <h2>{user.name}</h2>
+        <h2>{user.username}</h2>
         <p>{user.email}</p>
         <p>{user.bio}</p>
+        <p>Favorite Pokemon: </p>
+        <ul>
+          {user.favorites && Object.keys(user.favorites).map((id) => (
+            <PokeCard key={id} id={id}/>
+          ))}
+        </ul>
       </div>}
     </div>
   )

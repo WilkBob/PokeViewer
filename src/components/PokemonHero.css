@@ -11,7 +11,15 @@
 }
 
 .pokemon-image {
-    height: 400px;
+    height: 400px; 
+    transition: all 0.3s ease-in-out;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+}
+
+.pokemon-image:hover {
+    transform: translate(0, -10px) rotate(5deg) scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+   
 }
 
 .pokemon-info {

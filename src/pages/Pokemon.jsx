@@ -6,9 +6,9 @@ const Pokemon = () => {
 
     const id = useParams().id;
   return (
-    <div>
+    <>
       <PokemonHero id={id}/>
-    </div>
+    </>
   )
 }
 
