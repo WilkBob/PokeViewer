@@ -16,8 +16,10 @@ const Pokedex = () => {
   }, []);
 
   return (
-    <>
+    <div className='text-light glass pokedex'>
       <Typography variant="h4" align="center">Pokedex</Typography>
+      <Typography variant="subtitle1" align="center">The original 151 Pokemon</Typography>
+      <hr style={{width: '100%', marginBottom: '20px'}}/>
       <Grid container spacing={2}>
         {pokemonData.map((pokemon, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
@@ -25,7 +27,7 @@ const Pokedex = () => {
           </Grid>
         ))}
       </Grid>
-    </>
+    </div>
   );
 };
 

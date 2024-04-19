@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Button, IconButton } from '@mui/material';
+import { useEffect, useState, useContext} from 'react';
+import { Button, IconButton, capitalize } from '@mui/material';
 import { Favorite as FavoriteIcon, MoreHorizOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getImageUrl, getPokemonById } from '../API/pokemon'; // import toggleFavorite
@@ -11,6 +11,8 @@ const PokeCard = ({ id, position }) => {
   const [favorites, setFavorites] = useState({});
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
     if (id) {
@@ -37,6 +39,8 @@ const PokeCard = ({ id, position }) => {
     navigate('/login');
     return;
   }
+//2 pokemon use -f or -m for their gender, so we need to capitalize the first letter and replace the gender markers with their unicode characters
+  
 
   const newFavorites = { ...favorites };
   if (isFavorite) {
@@ -48,7 +52,17 @@ const PokeCard = ({ id, position }) => {
   toggleFavorite(user.uid, id);
 };
 
-  const className = `PokeCard position-${position}`;
+const capitalizeAndParseGender = (name) => {
+  if(!name) return '';
+  if (name.includes('-f')) {
+    return name.charAt(0).toUpperCase() + name.slice(1).replace('-f', '\u2640');
+  } else if (name.includes('-m')) {
+    return name.charAt(0).toUpperCase() + name.slice(1).replace('-m', '\u2642');
+  } else {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+};
+  const className = `PokeCard position-${position} ${pokemon ? pokemon.types[0].type.name  : ''}`;
 
   if (!pokemon) return null;
 
@@ -63,7 +77,7 @@ const PokeCard = ({ id, position }) => {
         />
       </div>
       <div className='poke-card-content'>
-        <h2>{pokemon.name.charAt(0).toUpperCase()}{pokemon.name.slice(1)} 
+        <h2>{capitalizeAndParseGender(pokemon.name)} 
         <IconButton onClick={handleFavoriteClick}>
           <FavoriteIcon color={isFavorite ? 'secondary' : 'default'} />
         </IconButton>

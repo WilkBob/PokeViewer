@@ -34,7 +34,7 @@ function NavBar() {
           My App
         </Typography>
         {!user && <Button color="inherit" onClick={()=>navigate('/login')}>Login</Button>}
-        {user && <Avatar alt={user.name} src={user.profileImage}>{user.email[0]}</Avatar>}
+        {user && <Link to={`/user/${user.uid}`}><Avatar alt={user.name} src={user.profileImage}>{user.email[0]}</Avatar></Link>}
       </Toolbar>
     </AppBar>
   );
