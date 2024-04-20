@@ -73,12 +73,13 @@ const SignUp = () => {
         <hr></hr>
         <form noValidate onSubmit={handleSignUp}>
           <TextField
+            error={!validateUsername(username)}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="username"
-            label="Username"
+            label="Username (no spaces or special characters)"
             name="username"
             autoComplete="username"
             autoFocus
@@ -86,6 +87,7 @@ const SignUp = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
+          error={!validateEmail(email)}
             variant="outlined"
             margin="normal"
             required
@@ -98,6 +100,7 @@ const SignUp = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            error={!validatePassword(password)}
             variant="outlined"
             margin="normal"
             required
@@ -111,6 +114,7 @@ const SignUp = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
+            error={password !== confirmPassword}
             variant="outlined"
             margin="normal"
             required

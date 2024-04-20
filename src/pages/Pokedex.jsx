@@ -22,7 +22,7 @@ const Pokedex = () => {
       <hr style={{width: '100%', marginBottom: '20px'}}/>
       <Grid container spacing={2}>
         {pokemonData.map((pokemon, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+          <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
             <PokedexCard pokemon = {pokemon}/>
           </Grid>
         ))}
