@@ -31,7 +31,7 @@ function NavBar() {
         </IconButton>
         <MenuNav anchorEl={anchorEl} open={open} handleClose={handleClose} Link={Link}  />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          My App
+          PokeViewer
         </Typography>
         {!user && <Button color="inherit" onClick={()=>navigate('/login')}>Login</Button>}
         {user && <Link to={`/user/${user.uid}`}><Avatar alt={user.name} src={user.profileImage}>{user.email[0]}</Avatar></Link>}

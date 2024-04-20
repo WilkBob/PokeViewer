@@ -7,7 +7,7 @@ const Home = () => {
     <div className='glass home'>
         
         <Container>
-            <Typography variant="h1" align='center' className='text-light'>PokeViewer</Typography>
+            <Typography variant="h2" align='center' className='text-light'>Poke Viewer</Typography>
             <Card>
                 <CardContent>
                     <Typography variant="h3" align='center'>Welcome to the Pokédex</Typography>
