@@ -4,12 +4,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import { getPokemonById, getImageUrl } from '../API/pokemon';
+import { getPokemonById, getImageUrl, getPokemonDescriptionFromSpecies } from '../API/pokemon';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { isFavorite, toggleFavorite } from '../API/firedb';
-
 import './PokemonHero.css';
 import { PlayArrow } from '@mui/icons-material';
 
@@ -20,7 +19,7 @@ function PokemonHero({ id }) {
     const [pokemon, setPokemon] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+    const [description, setDescription] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         if (id >= 1 && id <= 151) {
@@ -33,6 +32,10 @@ function PokemonHero({ id }) {
                 setLoading(false);
                 console.log('favorite:', Favorite);
             });
+            getPokemonDescriptionFromSpecies(id).then((data) => {
+                setDescription(data);
+            });
+
         } else {
             setError('Invalid Pokemon ID');
             setLoading(false);
@@ -80,7 +83,11 @@ const handleFavoriteClick = () => {
             </IconButton>
             <img src={getImageUrl(id)} alt={pokemon.name} className='pokemon-image' />
             <div className='pokemon-info'>
-                <Typography variant='h4' className='pokemon-name'>{pokemon.name.charAt(0).toUpperCase()}{pokemon.name.slice(1)}</Typography>
+                <Typography variant='h4' className='pokemon-name'>{pokemon.name.charAt(0).toUpperCase()}{pokemon.name.slice(1)}
+                <IconButton onClick={handleFavoriteClick}>
+                        <FavoriteIcon color={favorite ? 'secondary' : 'default'} />
+                    </IconButton>
+                </Typography>
                 <div className='pokemon-types'>
                     {pokemon.types.map((type, index) => (
                         <Chip sx={{translate: `${index * 20}px, 0px`}} key={index} label={type.type.name} color={
@@ -106,11 +113,9 @@ const handleFavoriteClick = () => {
                         </Chip>
                     ))}
                 </div>
-                <div className='favorite-button'>
-                    <IconButton onClick={handleFavoriteClick}>
-                        <FavoriteIcon color={favorite ? 'secondary' : 'default'} />
-                    </IconButton>
-                </div>
+                    
+                <Typography variant='body1' className='pokemon-description'>{description}</Typography>
+                
                 <div className="pokemon-details">
                     <List>
                         <ListItem>

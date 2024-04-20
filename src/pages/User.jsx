@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { getUser, updateUser } from '../API/firedb';
 import { useParams } from 'react-router-dom';
 import PokeCard from '../components/PokeCard';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 import './User.css';
-
+import { Card, CardContent, Typography, TextField, Button } from '@mui/material';
 async function getUserData(id) {
   try {
     const user = await getUser(id);
@@ -15,17 +17,19 @@ async function getUserData(id) {
 }
 
 const User = () => {
+  const { user } = useContext(UserContext);
+  const loggedInUserId = user ? user.uid : null;
   const {id} = useParams();
-  const [user, setUser] = useState(null);
+  const [displayUser, setDisplayUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [bio, setBio] = useState('');
 
   // Assume this comes from your auth context or similar
-  const loggedInUserId = '7uiVA40nijY53CF3phI7AtmQ4Mq1';
+  
 
   useEffect(() => {
     getUserData(id).then((data) => {
-      setUser(data);
+      setDisplayUser(data);
       setBio(data.bio);
     });
   }, [id]);
@@ -38,36 +42,45 @@ const User = () => {
     await updateUser(id, { bio });
     setEditMode(false);
   };
-
+if (!displayUser) {
+    return <div>Loading...</div>;
+  }else{
   return (
-    <div className='glass text-light User-page'>
-      {user && <div>
-        <h1>{user.username}</h1>
-        <h2>Bio</h2>
-        {editMode ? (
-          <div>
-            <textarea value={bio} onChange={handleBioChange} />
-            <button onClick={handleBioSubmit}>Save</button>
-          </div>
-        ) : (
-          <p>{bio}</p>
+    <>
+      <Card className='glass text-light User-page' sx={{marginBlock: '10px'}}>
+        {displayUser && (
+          <CardContent className=''>
+            <Typography variant="h4">{displayUser.username}</Typography>
+            <Typography variant="h5">Bio</Typography>
+            {editMode ? (
+              <div>
+                <TextField fullWidth multiline value={bio} onChange={handleBioChange} />
+                <Button variant="contained" color="primary" onClick={handleBioSubmit}>Save</Button>
+              </div>
+            ) : (
+              <Typography variant="body1">{bio}</Typography>
+            )}
+            {loggedInUserId === id && !editMode && (
+              <Button variant="contained" color="secondary" onClick={() => setEditMode(!editMode)}>
+                {'Edit Bio'}
+              </Button>
+            )}
+          </CardContent>
         )}
-        {loggedInUserId === id && (
-          <button onClick={() => setEditMode(!editMode)}>
-            {editMode ? 'Cancel' : 'Edit Bio'}
-          </button>
-        )}
-        <div className='user-favorites'>
-          <h2>{user.username}'s Favorites</h2>
+      </Card>
+      <Card className='glass text-light User-page'>
+        <CardContent>
+          <Typography variant="h5">{displayUser.username}'s Favorites</Typography>
           <div className='card-list'>
-            {user.favorites && Object.keys(user.favorites).map((id) => (
+            {displayUser.favorites && Object.keys(displayUser.favorites).map((id) => (
               <PokeCard key={id} id={id}/>
             ))}
           </div>
-        </div>
-      </div>}
-    </div>
-  )
+        </CardContent>
+      </Card>
+    </>
+  );
+}
 }
 
 export default User

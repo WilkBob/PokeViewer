@@ -6,7 +6,7 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 const PokeScroller = () => {
  
-  const [id, setId] = useState(2);
+  const [id, setId] = useState(1);
 
   const handlePrevious = () => {
     setId(id > 1 ? id - 1 : 151);

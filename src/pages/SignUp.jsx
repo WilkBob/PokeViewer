@@ -11,18 +11,42 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const {user, setUser} = useContext(UserContext);
 
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 6;
+  };
+
+  const validateUsername = (username) => {
+    //no spaces or special characters
+    const re = /^[a-zA-Z0-9]+$/;
+    return re.test(username);
+  };
+
+  const validateForm = () => {
+    return (
+      validateEmail(email) &&
+      validatePassword(password) &&
+      password === confirmPassword &&
+      validateUsername(username)
+    );};
+
   const navigate = useNavigate();
 
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Passwords don't match.");
+    if (!validateForm()) {
+      console.error('Invalid form');
+      alert('Invalid form');
       return;
     }
 
     try{
-        const newUser = await signUp(username, email, password);
+        const newUser = await signUp(email, password, username);
         setUser(newUser);
         console.log(newUser);
     }

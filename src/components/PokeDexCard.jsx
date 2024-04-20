@@ -10,7 +10,16 @@ const PokeDexCard = ({pokemon}) => {
     fetchPokemon();
   }, []);
 
-  const pokemonNameCapitalized = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  const capitalizeAndParseGender = (name) => {
+    if(!name) return '';
+    if (name.includes('-f')) {
+      return name.charAt(0).toUpperCase() + name.slice(1).replace('-f', '\u2640');
+    } else if (name.includes('-m')) {
+      return name.charAt(0).toUpperCase() + name.slice(1).replace('-m', '\u2642');
+    } else {
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+  };
 
   const fetchPokemon = async () => {
     const data = await getPokemonByName(pokemon.name);
@@ -33,7 +42,7 @@ const PokeDexCard = ({pokemon}) => {
       
       }}>
       <CardContent>
-        <Typography variant="h6">#{pokeData.id} - {pokemonNameCapitalized} </Typography>
+        <Typography variant="h6">#{pokeData.id} - {capitalizeAndParseGender(pokeData.name)} </Typography>
         <Typography variant="body2" color="text.secondary">
           {pokeData.types.map((type) => type.type.name).join(', ')}
         </Typography>

@@ -13,6 +13,7 @@
   margin: 10px;
   padding: 0;
   transition: all 0.3s ease;
+  border: 2px solid rgba(5, 5, 5, 0.418);
 }
 
 .poke-card-content {
@@ -78,15 +79,15 @@
 
 
 .poke-card.fire{
-  background: linear-gradient(90deg, #f1271146 0%, #f58e1949 100%);
+  background: linear-gradient(90deg, #ff260e73 0%, #ffa84481 100%);
 }
 
 .poke-card.water{
-  background: linear-gradient(90deg, #00c5fb38 0%, #005aea4b 100%);
+  background: linear-gradient(90deg, #84e4ff3d 0%, #458af896 100%);
 }
 
 .poke-card.electric{
-  background: linear-gradient(90deg, #f7b73338 0%, #e8ff6241 100%);
+  background: linear-gradient(90deg, #f7b73338 0%, #fff562ab 100%);
 }
 
 .poke-card.grass{

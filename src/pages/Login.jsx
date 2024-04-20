@@ -48,7 +48,7 @@ useEffect(()=>{
     navigate('/')
   }
   
-}, [user])
+}, [user, navigate])
 if(user){
   return(
     <p> user</p>
