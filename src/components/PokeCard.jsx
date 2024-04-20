@@ -67,7 +67,7 @@ const capitalizeAndParseGender = (name) => {
   if (!pokemon) return null;
 
   return (
-    <div className={`poke-card ${className} glass text-light`}>
+    <div className={`poke-card ${className} text-light`}>
       <div className='poke-card-media'>
         <img
           onClick={() => navigate(`/pokemon/${id}`)}
