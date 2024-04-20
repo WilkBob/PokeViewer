@@ -65,6 +65,21 @@ const handleFavoriteClick = () => {
     }
 };
 
+const capitalizeAndParseGender = (name) => {
+    if(!name) return '';
+    if(name.includes('r-')) {
+      //replace r- with 'r. ', this is for Mr. Mime
+      return name.charAt(0).toUpperCase() + name.slice(1).replace('r-m', 'r. M');
+    } else
+    if (name.includes('-f')) {
+      return name.charAt(0).toUpperCase() + name.slice(1).replace('-f', '\u2640');
+    } else if (name.includes('-m')) {
+      return name.charAt(0).toUpperCase() + name.slice(1).replace('-m', '\u2642');
+    } else {
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+  };
+
 
 
 
@@ -83,39 +98,25 @@ const handleFavoriteClick = () => {
             </IconButton>
             <img src={getImageUrl(id)} alt={pokemon.name} className='pokemon-image' />
             <div className='pokemon-info'>
-                <Typography variant='h4' className='pokemon-name'>{pokemon.name.charAt(0).toUpperCase()}{pokemon.name.slice(1)}
-                <IconButton onClick={handleFavoriteClick}>
+                <Typography variant='h4' className='pokemon-name'>{capitalizeAndParseGender(pokemon.name)}
+                    <IconButton onClick={handleFavoriteClick}>
                         <FavoriteIcon color={favorite ? 'secondary' : 'default'} />
                     </IconButton>
                 </Typography>
                 <div className='pokemon-types'>
                     {pokemon.types.map((type, index) => (
-                        <Chip sx={{translate: `${index * 20}px, 0px`}} key={index} label={type.type.name} color={
-                            type.type.name === 'grass' ? 'success' :
-                            type.type.name === 'fire' ? 'error' :
-                            type.type.name === 'water' ? 'info' :
-                            type.type.name === 'bug' ? 'warning' :
-                            type.type.name === 'normal' ? 'default' :
-                            type.type.name === 'poison' ? 'secondary' :
-                            type.type.name === 'electric' ? 'warning' :
-                            type.type.name === 'ground' ? 'info' :
-                            type.type.name === 'fairy' ? 'error' :
-                            type.type.name === 'fighting' ? 'error' :
-                            type.type.name === 'psychic' ? 'error' :
-                            type.type.name === 'rock' ? 'info' :
-                            type.type.name === 'ghost' ? 'error' :
-                            type.type.name === 'ice' ? 'info' :
-                            type.type.name === 'dragon' ? 'error' :
-                            type.type.name === 'dark' ? 'error' :
-                            type.type.name === 'steel' ? 'info' :
-                            type.type.name === 'flying' ? 'info' : 'default'
-                        }>
+                        <Chip
+                            sx={{ translate: `${index * 20}px, 0px`, textShadow: '0px 0px 5px black' }}
+                            key={index}
+                            label={type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+                            className={type.type.name}
+                        >
                         </Chip>
                     ))}
                 </div>
-                    
+
                 <Typography variant='body1' className='pokemon-description'>{description}</Typography>
-                
+
                 <div className="pokemon-details">
                     <List>
                         <ListItem>
@@ -128,14 +129,14 @@ const handleFavoriteClick = () => {
                             <ListItemText primary={`Base Experience: ${pokemon.base_experience}`} />
                         </ListItem>
                         <ListItem>
-                            <ListItemText primary={`${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}'s Cry:`} />
+                            <ListItemText primary={`${capitalizeAndParseGender(pokemon.name)}'s Cry:`} />
                             <audio src={pokemon.cries.latest}></audio>
                             <IconButton onClick={() => document.querySelector('audio').play()}>
                                 <PlayArrow />
                             </IconButton>
-                            
-                                <VolumeUp/>
-                            
+
+                            <VolumeUp />
+
                             <Slider onChange={(e, value) => document.querySelector('audio').volume = value} defaultValue={0.5} step={0.01} max={1} min={0} />
                         </ListItem>
                     </List>
@@ -148,9 +149,9 @@ const handleFavoriteClick = () => {
                     >
                         <Typography>Moves</Typography>
                     </AccordionSummary>
-                    <AccordionDetails sx={{overflowY: 'scroll', height: '200px'}}>
+                    <AccordionDetails sx={{ overflowY: 'scroll', height: '200px' }}>
                         {pokemon.moves.map((move, index) => (
-                            <Chip variant='outlined' sx={{margin: '2px'}} key={index} label={move.move.name.charAt(0).toUpperCase() + move.move.name.slice(1)} />
+                            <Chip variant='outlined' sx={{ margin: '2px' }} key={index} label={move.move.name.charAt(0).toUpperCase() + move.move.name.slice(1)} />
                         ))}
                     </AccordionDetails>
                 </Accordion>

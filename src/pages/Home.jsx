@@ -5,8 +5,9 @@ import PokeScroller from '../components/PokeScroller'
 const Home = () => {
   return (
     <div className='glass home'>
-        <Typography variant="h1" align='center' className='text-light'>PokeViewer</Typography>
+        
         <Container>
+            <Typography variant="h1" align='center' className='text-light'>PokeViewer</Typography>
             <Card>
                 <CardContent>
                     <Typography variant="h3" align='center'>Welcome to the Pokédex</Typography>

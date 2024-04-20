@@ -1,4 +1,4 @@
-import { Typography, Card, CardContent, CardMedia, CardActionArea } from '@mui/material';
+import { Typography, Card, CardContent, CardMedia, CardActionArea, Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getImageUrl, getPokemonByName } from '../API/pokemon';
 import { useNavigate } from 'react-router-dom';
@@ -52,7 +52,15 @@ const PokeDexCard = ({pokemon}) => {
           textOverflow: 'ellipsis' 
         }}>#{pokeData.id} - {capitalizeAndParseGender(pokeData.name)} </Typography>
         <Typography variant="body2" color="text.secondary">
-          {pokeData.types.map((type) => type.type.name).join(', ')}
+          {pokeData.types.map((type, index) => (
+                        <Chip
+                            sx={{marginInline:'5px', textShadow: '0px 0px 5px black' }}
+                            key={index}
+                            label={type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+                            className={type.type.name}
+                        >
+                        </Chip>
+                    ))}
         </Typography>
       </CardContent>
       </CardActionArea>
