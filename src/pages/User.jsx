@@ -9,7 +9,7 @@ import { Card, CardContent, Typography, TextField, Button } from '@mui/material'
 async function getUserData(id) {
   try {
     const user = await getUser(id);
-    console.log('User data:', user); // Log the user data
+    // console.log('User data:', user); // Log the user data
     return user;
   } catch (error) {
     console.error('Error getting user data:', error); // Log the error

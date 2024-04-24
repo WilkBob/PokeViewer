@@ -19,10 +19,6 @@ function NavBar() {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <AppBar position="static">
       <Toolbar>

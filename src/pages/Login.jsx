@@ -25,7 +25,7 @@ const Login = () => {
   try {
     signIn(formData.email, formData.password)
       .then((userCredential) => {
-        console.log('Promise resolving,m navigate 28', userCredential)
+        // console.log('Promise resolving,m navigate 28', userCredential)
         setUser(userCredential);
        
       })

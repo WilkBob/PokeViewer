@@ -54,10 +54,10 @@ export const isFavorite = async (userId, pokemonId) => {
 }
 
 export const getUser = async (userId) => {
-    console.log('Getting user with ID:', userId); // Log the userId
+    // console.log('Getting user with ID:', userId); // Log the userId
     try {
         const snapshot = await get(ref(db, `users/${userId}`));
-        console.log('Snapshot:', snapshot); // Log the snapshot
+        // console.log('Snapshot:', snapshot); // Log the snapshot
         return snapshot.val();
     } catch (error) {
         console.error(error);

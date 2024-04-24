@@ -26,11 +26,11 @@ function PokemonHero({ id }) {
             getPokemonById(id).then((data) => {
                 setPokemon(data);
                 setLoading(false);
-                console.log(data)
+                // console.log(data)
             }).catch((error) => {
                 setError('Error fetching Pokemon');
                 setLoading(false);
-                console.log('favorite:', Favorite);
+                // console.log('favorite:', Favorite);
             });
             getPokemonDescriptionFromSpecies(id).then((data) => {
                 setDescription(data);

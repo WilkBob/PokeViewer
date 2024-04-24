@@ -48,7 +48,7 @@ const SignUp = () => {
     try{
         const newUser = await signUp(email, password, username);
         setUser(newUser);
-        console.log(newUser);
+        // console.log(newUser);
     }
     catch(error){
         console.error(error);
