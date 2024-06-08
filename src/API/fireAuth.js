@@ -2,8 +2,8 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { getDatabase, set, ref } from "firebase/database";
 import { app } from "./firebase";
 
-const ye = app;
-const db = getDatabase(ye);
+const App = app;
+const db = getDatabase(App);
 
 const auth = getAuth();
 
